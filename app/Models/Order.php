@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,8 +21,12 @@ class Order extends Model
         return $this->belongsTo(Order::class);
     }
 
-    public function OrderItems(): HasMany
+    public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
+    }
+
+    public function orderPayment():HasOne{
+        return $this->hasOne(OrderPayment::class);
     }
 }

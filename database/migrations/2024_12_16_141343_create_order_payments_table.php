@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\PaymentStatusEnum;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
@@ -11,13 +12,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('admins', function (Blueprint $table) {
+        Schema::create('order_payments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->string('phone_number',20)->unique();
+            $table->string('payment_method');
+            $table->decimal('amount',10,2);
+            $table->string('status')->default(PaymentStatusEnum::PENDING->value);
+            $table->foreignId('order_id')->constrained();
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('admins');
+        Schema::dropIfExists('order_payments');
     }
 };

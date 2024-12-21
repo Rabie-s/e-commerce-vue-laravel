@@ -15,11 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug');
-            $table->string('price');
+            $table->decimal('price',10,2);
             $table->string('main_image');
             $table->integer('quantity')->default(0);
+            $table->mediumText('description')->nullable();
             $table->foreignId('category_id')->constrained();
-            $table->foreignId('admin_id')->constrained();
+            $table->foreignId('admin_id')->constrained(); 
             $table->timestamps();
         });
     }

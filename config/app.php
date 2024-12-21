@@ -124,8 +124,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
-    'aliases' => Facade::defaultAliases()->merge([
-        'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
-    ])->toArray(),
 
 ];

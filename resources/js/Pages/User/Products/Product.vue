@@ -6,14 +6,13 @@
             <swiper :navigation="true" :pagination="true" :mousewheel="true" :keyboard="true" :modules="modules"
                 class="max-w-96">
                 <swiper-slide>
-                    <img class="w-full"
-                        :src="product.product.main_image"
-                        alt="image description">
+                    <img class="w-full" :src="product.product.main_image" alt="image description">
                 </swiper-slide>
                 <swiper-slide v-for="image in product.product.product_images">
                     <img class="w-full" :src="image.image" alt="" srcset="">
                 </swiper-slide>
             </swiper>
+
 
         </div>
 
@@ -32,13 +31,14 @@
                 <div class="mt-2">
                     <label for="number-input"
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
-                    <input type="number" v-model="formData.quantity" id="number-input" aria-describedby="helper-text-explanation"
+                    <input type="number" v-model="formData.quantity" id="number-input"
+                        aria-describedby="helper-text-explanation"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         value="1" min="1" max="5" required />
                 </div>
 
                 <div class="mt-2">
-                    <button type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300
+                    <button @click="addToCart" type="button" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300
                      font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center items-center me-2
                       dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
 
@@ -56,15 +56,13 @@
         </div>
 
     </div>
-    <div>
-        {{ formData.productId }}
-    </div>
 
 </template>
 
 <script setup>
 const product = defineProps({ product: Object })
 import { ref } from 'vue';
+import { router } from '@inertiajs/vue3'
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from 'swiper/vue';
 // Import Swiper styles
@@ -75,11 +73,22 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 const modules = [Navigation, Pagination, Mousewheel, Keyboard]
 
+let images = []
+
+for (let img in product.product.product_images) {
+    images.push(product.product.product_images[img].image)
+}
+
+
 const formData = ref({
-    productId:product.product.id,
-    price:product.product.price,
-    quantity:1
+    productId: product.product.id,
+    price: product.product.price,
+    quantity: 1
 
 })
+
+function addToCart() {
+    router.post(route('cart.addToCart'), formData.value)
+}
 
 </script>
