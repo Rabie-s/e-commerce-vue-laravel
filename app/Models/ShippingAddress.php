@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class ShippingAddress extends Model
 {
     use HasFactory;
-    protected $fillable = ['country', 'area', 'street_address', 'phone_number', 'user_id'];
+    protected $fillable = ['first_name','last_name','country', 'area', 'street_address', 'phone_number', 'user_id'];
 
     public function user(): BelongsTo
     {

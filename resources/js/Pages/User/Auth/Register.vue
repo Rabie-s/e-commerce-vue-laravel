@@ -12,7 +12,7 @@
                         name</label>
                     <input type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="John" v-model="formData.name" required />
+                        v-model="formData.name" required />
                     <p v-if="errors.name" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors.name }}</p>
                 </div>
 
@@ -21,7 +21,7 @@
                         address</label>
                     <input type="email" id="email"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="john.doe@company.com" v-model="formData.email" required />
+                        v-model="formData.email" required />
                     <p v-if="errors.email" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors.email }}</p>
                 </div>
 
@@ -30,7 +30,7 @@
                         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                     <input type="password" id="password"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="•••••••••" v-model="formData.password" required />
+                        v-model="formData.password" required />
                     <p v-if="errors.password" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors.password }}
                     </p>
                 </div>
@@ -40,7 +40,7 @@
                         number</label>
                     <input type="text"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="123-45-678" v-model="formData.phone_number" required />
+                        v-model="formData.phone_number" required />
                     <p v-if="errors.phone_number" class="mt-1 text-sm text-red-600 dark:text-red-500">{{
                         errors.phone_number }}</p>
                 </div>

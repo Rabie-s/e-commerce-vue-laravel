@@ -19,6 +19,7 @@
     "dependencies": {
         "@inertiajs/vue3": "^1.2.0",
         "flowbite": "^2.5.2",
-        "swiper": "^11.1.15"
+        "swiper": "^11.1.15",
+        "vue3-toastify": "^0.2.8"
     }
 }

@@ -13,8 +13,6 @@ createInertiaApp({
     //page.default.layout = name.startsWith('Admin/') ? AdminLayout : DefaultLayout
     if (name.startsWith('Admin/')) {
       page.default.layout = AdminLayout
-    } else if (name.startsWith('User/Auth')) {
-      page.default.layout = null;
     } else {
       page.default.layout = DefaultLayout;
     }

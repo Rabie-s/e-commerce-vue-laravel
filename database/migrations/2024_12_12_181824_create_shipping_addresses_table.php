@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('shipping_addresses', function (Blueprint $table) {
             $table->id();
+            $table->string('first_name',60);
+            $table->string('last_name',60);
             $table->string('country',60);
             $table->string('area',60);
             $table->string('street_address',60);

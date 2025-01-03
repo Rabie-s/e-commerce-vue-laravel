@@ -4,7 +4,6 @@ namespace App\Http\Controllers\User;
 
 use Inertia\Inertia;
 use App\Models\Product;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -16,7 +15,7 @@ class ProductController extends Controller
     public function index()
     {
         try {
-            $products = Product::all();
+            $products = Product::select('id', 'name', 'main_image', 'price')->orderBy('id')->paginate(12);
             return Inertia::render('User/Products/Products', [
                 'products' => $products
             ]);
@@ -31,7 +30,7 @@ class ProductController extends Controller
     public function show(string $id)
     {
         try {
-            $product = Product::with('ProductImages')->where('id', $id)->firstOrFail();
+            $product = Product::with(['productImages:id,image,product_id', 'category:id,name'])->where('id', $id)->firstOrFail();
             return Inertia::render('User/Products/Product', [
                 'product' => $product
             ]);
@@ -40,8 +39,9 @@ class ProductController extends Controller
         }
     }
 
-    public function showProductsByCategories(string $id){
-        $products = Product::where('category_id',$id)->get();
+    public function showProductsByCategories(string $id)
+    {
+        $products = Product::select('id', 'name', 'main_image', 'price')->where('category_id', $id)->paginate(12);
         return Inertia::render('User/Products/Products', [
             'products' => $products
         ]);

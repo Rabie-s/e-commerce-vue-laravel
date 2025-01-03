@@ -10,53 +10,34 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    /**
-     * Show the registration form.
-     *
-     * @return \Inertia\Response
-     */
+
     public function showRegistrationForm()
     {
         return Inertia::render('User/Auth/Register');
     }
 
-    /**
-     * Show the login form.
-     *
-     * @return \Inertia\Response
-     */
+
     public function showLoginForm()
     {
         return Inertia::render('User/Auth/Login');
     }
 
-    /**
-     * Handle the user registration request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
+
     public function registerUser(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'phone_number' => 'min:8|unique:users',
             'password' => 'required|min:8',
         ]);
 
-        User::create($request->all());
+        User::create($validated);
 
         // Optional: Redirect or return response after successful registration
-        //return redirect()->route('login');  // Assuming 'login' is a named route
+        return redirect()->route('user.auth.showLoginForm');  // Assuming 'login' is a named route
     }
 
-        /**
-     * Handle the user registration request.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function loginUser(Request $request)
     {
         $credentials =$request->validate([
@@ -64,25 +45,24 @@ class AuthController extends Controller
             'password' => 'required',
         ]);
 
-        if(Auth::attempt($credentials)){
+        if(Auth::guard('user')->attempt($credentials)){
             $request->session()->regenerate();
-            return to_route('welcome');
+            return redirect()->route('home.index');
         }
         return back()->with('message','Incorrect email or password');
-
-
+    
         // Optional: Redirect or return response after successful registration
         //return redirect()->route('login');  // Assuming 'login' is a named route
     }
 
-    public function logout(Request $request){
-        Auth::logout();
+    public function logoutUser(Request $request){
+        Auth::guard('user')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('user.auth.loginUser');;
+        return redirect()->route('home.index');
     }
 }
 

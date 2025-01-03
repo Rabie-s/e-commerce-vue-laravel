@@ -14,9 +14,9 @@ class CartController extends Controller
     public function index()
     {
         //session()->forget('cart');
-        $cartContent = Cart::content();
+        
         $cartTotal = Cart::total();
-        return Inertia::render('User/Cart/Cart', ['cartContent' => $cartContent, 'cartTotal' => $cartTotal]);
+        return Inertia::render('User/Cart/Cart', [ 'cartTotal' => $cartTotal]);
     }
 
 

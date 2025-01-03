@@ -24,7 +24,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Inertia::share([
             'categories'=>function(){
-                return Category::all();
+                return Category::select('id','name')->get();
             }
         ]);
     }

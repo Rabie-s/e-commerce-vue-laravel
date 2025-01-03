@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Inertia\Middleware;
 use Illuminate\Http\Request;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -37,14 +38,18 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
 
-            'auth.user' => fn () => $request->user()
-            ? $request->user()->only('id', 'name', 'email','phone_number')
-            : null,
+            'auth.user' => fn() => $request->user()
+                ? $request->user()->only('id', 'name', 'email', 'phone_number')
+                : null,
 
             'flash' => [
-                'message' => fn () => $request->session()->get('message')
+                'message' => fn() => $request->session()->get('message')
             ],
-            
+
+            'cartContent' => fn() => Cart::content(),
+
+            'cartCount' => fn() => Cart::count()
+
         ]);
     }
 }

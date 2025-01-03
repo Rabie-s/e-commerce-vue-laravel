@@ -19,7 +19,7 @@
         <div>
 
             <div>
-                <h6 class="text-sm text-gray-400">Phones</h6>
+                <h6 class="text-sm text-gray-400">{{ product.product.category.name }}</h6>
                 <h1 class="text-4xl font-bold">{{ product.product.name }}</h1>
                 <span class="text-3xl font-bold text-gray-900 dark:text-white">{{ product.product.price }}$</span>
             </div>
@@ -73,11 +73,6 @@ import 'swiper/css/pagination';
 import { Navigation, Pagination, Mousewheel, Keyboard } from 'swiper/modules';
 const modules = [Navigation, Pagination, Mousewheel, Keyboard]
 
-let images = []
-
-for (let img in product.product.product_images) {
-    images.push(product.product.product_images[img].image)
-}
 
 
 const formData = ref({

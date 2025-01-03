@@ -26,7 +26,7 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    public function OrderItems(): HasMany
+    public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
@@ -36,7 +36,7 @@ class Product extends Model
         return $this->belongsTo(Admin::class);
     }
 
-    public function ProductImages(): HasMany
+    public function productImages(): HasMany
     {
         return $this->hasMany(ProductImage::class);
     }
