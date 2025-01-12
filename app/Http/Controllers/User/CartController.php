@@ -31,6 +31,7 @@ class CartController extends Controller
 
         $product = Product::findOrFail($request->productId);
         Cart::add($product->id, $product->name, $request->quantity, $request->price, 0, ['main_image' => $product->main_image]);
+        
     }
 
     public function updateItem(Request $request)
@@ -46,5 +47,9 @@ class CartController extends Controller
     public function removeItem(Request $request)
     {
         Cart::remove($request->rowId);
+    }
+
+    public function destroyCart(){
+        Cart::destroy();
     }
 }

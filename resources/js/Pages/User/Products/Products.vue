@@ -12,8 +12,8 @@
 </template>
 
 <script setup>
-import Card from '@/components/Card.vue';
-import Pagination from '@/components/Pagination.vue';
+import Card from '@/Components/User/Card.vue';
+import Pagination from '@/Components/User/Pagination.vue';
 
 defineProps({ products: Object });
 </script>

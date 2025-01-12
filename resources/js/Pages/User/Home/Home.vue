@@ -3,7 +3,13 @@
     <div class="container mx-auto">
 
 
-        <ImagesCarousel class="my-4" :images="images" />
+
+        <Swiper>
+            <swiper-slide v-for="image in images">
+                <img :src="image" class="h-[450px] w-full" alt="...">
+            </swiper-slide>
+        </Swiper>
+
         <!-- categories section -->
         <div class="my-10 space-y-4">
             <h1 class="text-3xl font-bold">Categories</h1>
@@ -19,11 +25,11 @@
             <h1 class="text-3xl font-bold">Last Products</h1>
             <Swiper>
                 <swiper-slide v-for="product in lastProducts" class="w-fit">
-                   <Card :id="product.id" :name="product.name" :image="product.main_image" :price="product.price"/>
+                    <Card :id="product.id" :name="product.name" :image="product.main_image" :price="product.price" />
                 </swiper-slide>
             </Swiper>
         </div>
-         
+
 
 
 
@@ -34,12 +40,11 @@
 
 </template>
 <script setup>
-defineProps({categories:Object,lastProducts:Object})
-import {  SwiperSlide } from 'swiper/vue';
-import ImagesCarousel from '@/components/ImagesCarousel.vue'
-import CategoryCard from '@/components/CategoryCard.vue'
-import Card from '@/components/Card.vue'
-import Swiper from '@/components/Swiper.vue'
+defineProps({ categories: Object, lastProducts: Object })
+import { SwiperSlide } from 'swiper/vue';
+import CategoryCard from '@/Components/User/CategoryCard.vue'
+import Card from '@/Components/User/Card.vue'
+import Swiper from '@/Components/User/Swiper.vue'
 
 
 

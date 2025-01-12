@@ -11,23 +11,29 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Requests\StoreCheckoutRequest;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 
 class CheckoutController extends Controller
 {
     public function index()
     {
-        
+        $authenticatedUser = Auth::guard('user')->user();
         $cartTotal = Cart::total();
-        return Inertia::render('User/Checkout/Checkout', [ 'cartTotal' => $cartTotal]);
+        try {
+            $userShippingAddress = $authenticatedUser->shippingAddress()->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+
+            return Inertia::render('User/Checkout/Checkout', ['userShippingAddress' => null]);
+        }
+
+
+        return Inertia::render('User/Checkout/Checkout', ['userShippingAddress' => $userShippingAddress, 'cartTotal' => $cartTotal]);
     }
 
     public function placeOrder(StoreCheckoutRequest $request)
     {
-
-
-
-        /* $authenticatedUser = Auth::guard('user')->user();
+        $authenticatedUser = Auth::guard('user')->user();
 
         //order
         $order = $authenticatedUser->orders()->create([
@@ -62,6 +68,9 @@ class CheckoutController extends Controller
             'payment_method' => $request->orderPayment['payment_method'],
             'amount' => Cart::total(),
             'status' => PaymentStatusEnum::PENDING->value,
-        ]); */
+        ]);
+
+        Cart::destroy();
+        return redirect()->route('home.index')->with('message',['message'=>'The order has been placed successfully.','type'=>'success']);
     }
 }

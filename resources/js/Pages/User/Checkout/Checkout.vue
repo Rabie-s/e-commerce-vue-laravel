@@ -1,5 +1,5 @@
 <template>
-    
+
     <div class="container mx-auto mt-5 p-5">
         <!-- Shipping Address Section -->
         <div>
@@ -7,24 +7,15 @@
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <!-- First Name -->
                 <div>
-                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        First Name
-                    </label>
-                    <input v-model="formData.shippingAddress.first_name" type="text" id="first_name"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                        required />
-                        <p v-if="errors['shippingAddress.first_name']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors['shippingAddress.first_name'] }}</p>
+                    <Input label="First Name" type="text" v-model="formData.shippingAddress.first_name" />
+                    <p v-if="errors['shippingAddress.first_name']" class="mt-1 text-sm text-red-600 dark:text-red-500">
+                        {{ errors['shippingAddress.first_name'] }}</p>
                 </div>
                 <!-- Last Name -->
                 <div>
-                    <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                        Last Name
-                    </label>
-                    <input v-model="formData.shippingAddress.last_name" type="text" id="last_name"
-                        class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                        required />
-                        <p v-if="errors['shippingAddress.last_name']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors['shippingAddress.last_name'] }}</p>
-
+                    <Input label="Last Name" type="text" v-model="formData.shippingAddress.last_name" />
+                    <p v-if="errors['shippingAddress.last_name']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{
+                        errors['shippingAddress.last_name'] }}</p>
                 </div>
             </div>
 
@@ -38,7 +29,8 @@
                     <option selected>Choose a country</option>
                     <option value="jordan">Jordan</option>
                 </select>
-                <p v-if="errors['shippingAddress.country']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors['shippingAddress.country'] }}</p>
+                <p v-if="errors['shippingAddress.country']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{
+                    errors['shippingAddress.country'] }}</p>
 
             </div>
 
@@ -50,29 +42,22 @@
                 <input v-model="formData.shippingAddress.area" type="text" id="area"
                     class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
                     required />
-                    <p v-if="errors['shippingAddress.area']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors['shippingAddress.area'] }}</p>
+                <p v-if="errors['shippingAddress.area']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{
+                    errors['shippingAddress.area'] }}</p>
 
             </div>
 
             <div class="mb-4">
-                <label for="street_address" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Street Address
-                </label>
-                <input v-model="formData.shippingAddress.street_address" type="text" id="street_address"
-                    class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    required />
-                    <p v-if="errors['shippingAddress.street_address']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors['shippingAddress.street_address'] }}</p>
+                    <Input label="Street Address" type="text" v-model="formData.shippingAddress.street_address" />
+                <p v-if="errors['shippingAddress.street_address']" class="mt-1 text-sm text-red-600 dark:text-red-500">
+                    {{ errors['shippingAddress.street_address'] }}</p>
 
             </div>
 
             <div class="mb-4">
-                <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Phone Number
-                </label>
-                <input v-model="formData.shippingAddress.phone_number" type="text" id="phone_number"
-                    class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
-                    required />
-                    <p v-if="errors['shippingAddress.phone_number']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors['shippingAddress.phone_number'] }}</p>
+                    <Input label="Phone Number" type="text" v-model="formData.shippingAddress.phone_number" />
+                <p v-if="errors['shippingAddress.phone_number']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{
+                    errors['shippingAddress.phone_number'] }}</p>
 
             </div>
         </div>
@@ -121,7 +106,8 @@
                     </label>
                 </li> -->
             </ul>
-            <p v-if="errors['orderPayment.payment_method']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{ errors['orderPayment.payment_method'] }}</p>
+            <p v-if="errors['orderPayment.payment_method']" class="mt-1 text-sm text-red-600 dark:text-red-500">{{
+                errors['orderPayment.payment_method'] }}</p>
         </div>
 
         <!-- Divider -->
@@ -170,25 +156,26 @@
             </button>
         </div>
     </div>
-    
+
 
 
 
 </template>
 
 <script setup>
-defineProps({ cartContent: Object, cartTotal: String, errors: Object })
+const props = defineProps({ userShippingAddress: Object, cartContent: Object, cartTotal: String, errors: Object })
 import { router, useForm } from '@inertiajs/vue3'
+import Input from '@/Components/Form/Input.vue'
 
 const formData = useForm({
 
     shippingAddress: {
-        first_name: '',
-        last_name: '',
-        country: '',
-        area: '',
-        street_address: '',
-        phone_number: '',
+        first_name: props.userShippingAddress?.first_name || '',
+        last_name: props.userShippingAddress?.last_name || '',
+        country: props.userShippingAddress?.country || '',
+        area: props.userShippingAddress?.area || '',
+        street_address: props.userShippingAddress?.street_address || '',
+        phone_number: props.userShippingAddress?.phone_number || '',
     },
     orderPayment: {
         payment_method: '',
@@ -201,7 +188,7 @@ const formData = useForm({
 
 function placeOrder() {
     router.post(route('checkout.placeOrder'), formData)
-    formData.reset()
+    //formData.reset()
 }
 
 </script>

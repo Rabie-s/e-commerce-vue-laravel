@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DateTimeInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,14 +21,21 @@ class Order extends Model
     {
         return $this->belongsTo(Order::class);
     }
-    
+
 
     public function orderItems(): HasMany
     {
         return $this->hasMany(OrderItem::class);
     }
 
-    public function orderPayment():HasOne{
+    public function orderPayment(): HasOne
+    {
         return $this->hasOne(OrderPayment::class);
+    }
+
+    //format date
+    protected function serializeDate(DateTimeInterface $date)
+    {
+        return $date->format('Y-m-d H:i:s');
     }
 }

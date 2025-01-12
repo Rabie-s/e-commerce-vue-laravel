@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -34,36 +35,51 @@ class AuthController extends Controller
 
         User::create($validated);
 
-        // Optional: Redirect or return response after successful registration
-        return redirect()->route('user.auth.showLoginForm');  // Assuming 'login' is a named route
+
+        return redirect()->route('user.auth.showLoginForm');  
     }
 
     public function loginUser(Request $request)
     {
-        $credentials =$request->validate([
+        $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if(Auth::guard('user')->attempt($credentials)){
+        if (Auth::guard('user')->attempt($credentials)) {
             $request->session()->regenerate();
             return redirect()->route('home.index');
         }
-        return back()->with('message','Incorrect email or password');
-    
-        // Optional: Redirect or return response after successful registration
-        //return redirect()->route('login');  // Assuming 'login' is a named route
+        return back()->with('message', ['message' => 'Incorrect email or password', 'type' => 'error']);
+
     }
 
-    public function logoutUser(Request $request){
+    public function logoutUser(Request $request)
+    {
         Auth::guard('user')->logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect()->route('home.index');
+        return redirect()->route('home.index')->with('message', ['message' => 'good bay', 'type' => 'success']);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $validated = $request->validate([
+            'currentPassword' => 'required',
+            'newPassword' => 'required|min:8',
+            'confirmNewPassword' => 'required|min:8|same:newPassword'
+
+        ]);
+        $checkPassword = Hash::check($request->currentPassword, $request->user()->password);
+
+        if ($checkPassword) {
+            $request->user()->password = $request->newPassword;
+            $request->user()->save();
+            return redirect()->back()->with('message', ['message' => 'Password Change Successful', 'type' => 'success']);
+        }
+        return redirect()->back()->with('message', ['message' => 'Incorrect Password', 'type' => 'error']);
     }
 }
-
-

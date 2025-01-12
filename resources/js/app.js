@@ -3,21 +3,30 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import { ZiggyVue } from '../../vendor/tightenco/ziggy'
 import '../css/app.css'
 import 'flowbite'
-import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import AdminLayout from '@/layouts/AdminLayout.vue'
+import DefaultLayout from '@/Layouts/DefaultLayout.vue'
+import AdminLayout from '@/Layouts/AdminLayout.vue'
+import UserProfileLayout from '@/Layouts/UserProfileLayout.vue'
 
 createInertiaApp({
   resolve: name => {
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
     let page = pages[`./Pages/${name}.vue`]
-    //page.default.layout = name.startsWith('Admin/') ? AdminLayout : DefaultLayout
-    if (name.startsWith('Admin/')) {
+    
+    // تقسيم الاسم إلى أجزاء بناءً على '/'
+    const parts = name.split('/')
+    
+    // تحديد التخطيط بناءً على أجزاء المسار
+    if (parts[0] === 'Admin') {
       page.default.layout = AdminLayout
+    } else if (parts[0] === 'User' && parts[1] === 'Profile') {
+      page.default.layout = [DefaultLayout, UserProfileLayout]
+    } else if (parts[0] === 'User') {
+      page.default.layout = DefaultLayout
     } else {
-      page.default.layout = DefaultLayout;
+      page.default.layout = DefaultLayout
     }
-    return page
 
+    return page
   },
   setup({ el, App, props, plugin }) {
     createApp({ render: () => h(App, props) })

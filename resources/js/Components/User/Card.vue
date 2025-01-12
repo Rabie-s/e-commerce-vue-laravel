@@ -28,6 +28,8 @@
 <script setup>
 import { Link } from "@inertiajs/vue3";
 import { router } from '@inertiajs/vue3'
+import { toast } from 'vue3-toastify';
+
 import { ref } from "vue";
 
 const props = defineProps({
@@ -45,6 +47,7 @@ const formData = ref({
 })
 
 function addToCart() {
+  toast.success('Item added successful', { autoClose: 700, theme: 'colored' });
   router.post(route('cart.addToCart'), formData.value)
 }
 

@@ -51,7 +51,15 @@
             </div>
         </div>
     </nav>
+
+    
+
 </template>
+
 <script setup>
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+
+toast('test',{'theme':'colored','type':'success','autoClose':700})
 
 </script>

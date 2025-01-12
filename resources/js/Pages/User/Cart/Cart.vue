@@ -65,12 +65,20 @@
             <span>{{ cartTotal }}$</span>
           </li>
         </ul>
+
         <Link :href="route('checkout.index')">
         <button type="button"
           class="mt-4 w-full px-5 py-2.5 text-sm font-medium text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
           Checkout
         </button>
         </Link>
+
+        
+        <button @click="destroyCart" type="button"
+          class="mt-4 w-full px-5 py-2.5 text-sm font-medium text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 rounded-lg text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+          Empty cart
+        </button>
+        
 
       </div>
     </div>
@@ -89,5 +97,9 @@ function updateItem(rowId, qty) {
 function removeItem(rowId) {
   const data = { rowId };
   router.delete(route("cart.removeItem", data));
+}
+
+function destroyCart(){
+  router.delete(route('cart.destroyCart'))
 }
 </script>
