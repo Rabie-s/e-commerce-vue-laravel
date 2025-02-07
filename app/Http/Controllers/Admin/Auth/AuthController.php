@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\User\Auth;
+namespace App\Http\Controllers\Admin\Auth;
 
-use App\Models\User;
+
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -11,25 +11,24 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-
-    public function showRegistrationForm()
+    /*     public function showRegistrationForm()
     {
         return Inertia::render('User/Auth/Register');
-    }
+    } */
 
 
     public function showLoginForm()
     {
-        return Inertia::render('User/Auth/Login');
+        return Inertia::render('Admin/Auth/Login');
     }
 
 
-    public function registerUser(Request $request)
+    /*     public function registerUser(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:admins',
-            'phone_number' => 'min:8|unique:admins',
+            'email' => 'required|email|unique:users',
+            'phone_number' => 'min:8|unique:users',
             'password' => 'required|min:8',
         ]);
 
@@ -37,26 +36,26 @@ class AuthController extends Controller
 
 
         return redirect()->route('user.auth.showLoginForm');  
-    }
+    } */
 
-    public function loginUser(Request $request)
+    public function loginAdmin(Request $request)
     {
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        if (Auth::guard('user')->attempt($credentials)) {
+        if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->route('home.index');
+            return redirect()->route('dashboard.index');
         }
         return back()->with('message', ['message' => 'Incorrect email or password', 'type' => 'error']);
-
     }
 
-    public function logoutUser(Request $request)
+    public function logoutAdmin(Request $request)
     {
-        Auth::guard('user')->logout();
+
+        Auth::guard('admin')->logout();
 
         $request->session()->invalidate();
 

@@ -1,7 +1,8 @@
 <template>
-<FlashMessage v-if="$page.props.flash.message" :type="$page.props.flash.message.type" :message="$page.props.flash.message.message"/>
-<NavBar/>
-<slot/>
+    <FlashMessage v-if="$page.props.flash.message" :type="$page.props.flash.message.type"
+        :message="$page.props.flash.message.message" />
+    <NavBar />
+    <slot />
 </template>
 
 <script setup>

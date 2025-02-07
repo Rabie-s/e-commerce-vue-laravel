@@ -127,7 +127,7 @@
 <script setup>
 defineProps({ auth: Object })
 import { Link, router, usePage } from '@inertiajs/vue3'
-import { computed } from 'vue';
+import { computed } from 'vue'
 const page = usePage()
 
 
