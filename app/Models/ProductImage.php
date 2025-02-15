@@ -13,6 +13,12 @@ class ProductImage extends Model
 
     protected $fillable = ['image', 'product_id'];
 
+    protected $appends = ['image_url'];
+    
+    public function getImageUrlAttribute(){
+        return asset('storage/images/' . $this->image);
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

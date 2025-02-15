@@ -15,6 +15,12 @@ class Category extends Model
         'main_image',
     ];
 
+    protected $appends = ['main_image_url'];
+
+    public function getMainImageUrlAttribute(){
+        return asset('storage/images/' . $this->main_image);
+    }
+
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

@@ -10,7 +10,7 @@
             class="grid justify-items-center grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"
             role="list">
             <Card v-for="(product, index) in products.data" :key="product.id" :id="product.id"
-                :image="product.main_image" :name="product.name" :price="product.price" class="animate-fadeIn" />
+                :image="product.main_image_url" :name="product.name" :price="product.price" class="animate-fadeIn" />
         </div>
 
         <!-- No Products Message -->

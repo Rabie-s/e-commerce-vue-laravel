@@ -3,7 +3,7 @@
     <div class="container">
 
         <div class="my-4">
-            <Link :href="route('categories.create')"
+            <Link :href="route('admin.products.create')"
                 class="space-x-1 px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             <svg class="w-5 h-5  text-white dark:text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                 width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -45,6 +45,7 @@
                 <tbody v-for="(product, index) in products.data">
                     <tr
                         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ product.name }}
                         </th>
@@ -75,7 +76,7 @@
                             </button>
 
 
-                            <Link :href="route('categories.edit', product.id)">
+                            <Link :href="route('admin.products.edit', product.id)">
                             <button
                                 class="text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 <svg class="w-4 h-4 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -117,8 +118,10 @@ defineProps({ products: Object })
 import { Link, router } from '@inertiajs/vue3';
 import Pagination from '@/Components/User/Pagination.vue';
 
+
+
 function destroy(id) {
-    router.delete(route('categories.destroy', id));
+    router.delete(route('admin.products.destroy', id));
 }
 
 </script>

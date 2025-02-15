@@ -28,12 +28,6 @@
                     <p v-if="errors.quantity" class="mt-1 text-sm text-red-600">{{ errors.quantity }}</p>
                 </div>
 
-                <!-- Description Field -->
-                <div class="mb-6">
-                    <Input label="Description" type="text" v-model="productData.description" />
-                    <p v-if="errors.description" class="mt-1 text-sm text-red-600">{{ errors.description }}</p>
-                </div>
-
                 <!-- Category Dropdown -->
                 <div class="mb-6">
                     <label for="category" class="block mb-2 text-sm font-medium text-gray-900">
@@ -75,6 +69,14 @@
                     <p v-if="errors.images" class="mt-1 text-sm text-red-600">{{ errors.images }}</p>
                 </div>
 
+                <!-- Description Field -->
+                <div class="mb-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+                    <QuillEditor v-model:content="productData.description" contentType="html" theme="snow" />
+                    <p v-if="errors.description" class="mt-1 text-sm text-red-600">{{ errors.description }}</p>
+                </div>
+
+                
                 <!-- Submit Button -->
                 <div class="flex justify-center">
                     <button type="submit"
@@ -89,6 +91,8 @@
 
 <script setup>
 defineProps({ errors: Object, categories: Object });
+import { QuillEditor } from '@vueup/vue-quill'
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import Input from '@/Components/Form/Input.vue';
 import { useForm, router } from '@inertiajs/vue3';
 import { ref } from 'vue';
@@ -99,7 +103,6 @@ const productData = useForm({
     quantity: '',
     description: '',
     category_id: '',
-    admin_id: '',
     main_image: null,
     images: []
 });

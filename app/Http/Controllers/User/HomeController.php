@@ -13,13 +13,7 @@ class HomeController extends Controller
     public function index()
     {
 
-        $categories = Category::select('id', 'name', 'main_image')->orderBy('id')->get()->map(function ($faq) {
-            return [
-                'id' => $faq->id,
-                'name' => $faq->name,
-                'main_image' => asset('storage/images/' . $faq->main_image )
-            ];
-        });
+        $categories = Category::select('id', 'name', 'main_image')->orderBy('id')->get();
         $lastProducts = Product::select('id', 'name', 'main_image', 'price')->latest()->limit(10)->get();
 
 
