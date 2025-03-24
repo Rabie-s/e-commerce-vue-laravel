@@ -5,7 +5,7 @@
 
 
         <Swiper>
-            <Slide v-for="image in images">
+            <Slide  v-for="image in images">
                 <img :src="image" class="h-[450px] w-full" alt="...">
             </Slide>
         </Swiper>
@@ -30,9 +30,6 @@
                 </Slide>
             </Swiper>
         </div>
-
-
-
 
 
 

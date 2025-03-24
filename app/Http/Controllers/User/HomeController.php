@@ -10,10 +10,11 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
+    //TODO make it invoke
     public function index()
     {
 
-        $categories = Category::select('id', 'name', 'main_image')->orderBy('id')->get();
+        $categories = Category::select('id', 'name', 'main_image')->latest()->get();
         $lastProducts = Product::select('id', 'name', 'main_image', 'price')->latest()->limit(10)->get();
 
 

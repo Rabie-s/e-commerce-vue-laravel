@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Requests\StoreAdminRequest;
+use App\Http\Requests\UpdateAdminRequest;
 use Inertia\Inertia;
 use App\Models\Admin;
 use Illuminate\Http\Request;
@@ -14,7 +16,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admins = Admin::select('id', 'name', 'email', 'phone_number')->orderBy('id')->paginate(12);
+        $admins = Admin::select('id', 'name', 'email', 'phone_number')
+        ->latest()->paginate(12);
         return Inertia::render('Admin/Admins/Index', ['admins' => $admins]);
     }
 
@@ -29,15 +32,9 @@ class AdminController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreAdminRequest $request)
     {
-        $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:admins',
-            'phone_number' => 'min:8|unique:admins',
-            'password' => 'required|min:8',
-        ]);
-        Admin::create($validated);
+        Admin::create($request->validated());
         return back()->with('message', ['message' => 'Admin inserted successful', 'type' => 'success']);
     }
 
@@ -58,15 +55,10 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateAdminRequest $request, string $id)
     {
-         $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'phone_number' => 'min:8',
-        ]);
         $admin = Admin::findOrFail($id);
-        $admin->update($validated);
+        $admin->update($request->validated());
         return back()->with('message', ['message' => 'Admin updated successful', 'type' => 'success']); 
     
     }
@@ -76,6 +68,13 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
+        //TODO fix admin can delete him self
+        $authenticatedAdminId = auth(guard: 'admin')->user()->id;
+        if($authenticatedAdminId ==$id){
+            return back()
+            ->with('message', ['message' => 'Admin cannot delete him self', 'type' => 'error']); 
+
+        }
         $admin = Admin::findOrFail($id);
         $admin->delete();
         return back()->with('message', ['message' => 'Admin deleted successful', 'type' => 'success']); 

@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Http\Requests\StoreShippingAddressRequest;
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use PhpParser\Node\Expr\Cast\String_;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ProfileController extends Controller
 {
@@ -18,58 +15,49 @@ class ProfileController extends Controller
 
     public function shippingAddress()
     {
-        $authenticatedUser = Auth::guard('user')->user();
+        $authenticatedUser = auth('user')->user();
 
-        try {
-            $userShippingAddress = $authenticatedUser->shippingAddress()->firstOrFail();
-        } catch (ModelNotFoundException $e) {
-
-            return Inertia::render('User/Profile/ShippingAddress', ['userShippingAddress' => null]);
-        }
-
+        $userShippingAddress = $authenticatedUser->shippingAddress()->first();
+    
         return Inertia::render('User/Profile/ShippingAddress', ['userShippingAddress' => $userShippingAddress]);
     }
 
 
-    public function insertShippingAddress(Request $request)
+    public function insertShippingAddress(StoreShippingAddressRequest $request)
     {
-        $authenticatedUser = Auth::guard('user')->user();
+        $authenticatedUser = auth('user')->user();
         $authenticatedUser->shippingAddress()->updateOrCreate(
             ['user_id' => $authenticatedUser->id],
             [
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'country' => $request->country,
-                'area' => $request->area,
-                'street_address' => $request->street_address,
-                'phone_number' => $request->phone_number,
-
+                ...$request->validated()
             ]
         );
+        return redirect()->back()
+        ->with('message',['message'=>'Shipping address updated successfully','type'=>'success']);
     }
 
     public function orders()
     {
-        $authenticatedUser = Auth::guard('user')->user();
-        $orders = $authenticatedUser->orders()->paginate(5);
+        $authenticatedUser = auth('user')->user();
+        $orders = $authenticatedUser->orders()
+        ->select('id','status','created_at')
+        ->latest()
+        ->paginate(5);
+        
         return Inertia::render('User/Profile/Orders', ['orders' => $orders]);
     }
 
     public function orderDetails(string $id)
     {
-        $authenticatedUser = Auth::guard('user')->user();
+        $authenticatedUser = auth('user')->user();
         $orderDetails = $authenticatedUser->orders()->findOrFail($id);
         $paymentDetails = $orderDetails->orderPayment()->firstOrFail();
         $shippingAddress = $authenticatedUser->shippingAddress()->firstOrFail();
 
-        $orderItems = $orderDetails->orderItems()->with([
-            'product' => function ($query) {
-                $query->select('id', 'name', 'main_image', 'price');
-            }
-        ])->get();
+        $orderItems = $orderDetails->orderItems()
+        ->with('product:id,name,main_image,price,main_image')
+        ->get();
 
-
-        //dd($orderItems);
         return Inertia::render('User/Profile/OrderDetails', [
             'orderDetails' => $orderDetails,
             'paymentDetails' => $paymentDetails,

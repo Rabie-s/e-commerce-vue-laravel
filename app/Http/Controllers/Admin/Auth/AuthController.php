@@ -11,32 +11,12 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    /*     public function showRegistrationForm()
-    {
-        return Inertia::render('User/Auth/Register');
-    } */
-
 
     public function showLoginForm()
     {
         return Inertia::render('Admin/Auth/Login');
     }
 
-
-    /*     public function registerUser(Request $request)
-    {
-        $validated = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'phone_number' => 'min:8|unique:users',
-            'password' => 'required|min:8',
-        ]);
-
-        User::create($validated);
-
-
-        return redirect()->route('user.auth.showLoginForm');  
-    } */
 
     public function loginAdmin(Request $request)
     {
@@ -55,7 +35,7 @@ class AuthController extends Controller
     public function logoutAdmin(Request $request)
     {
 
-        Auth::guard('admin')->logout();
+        auth('admin')->logout();
 
         $request->session()->invalidate();
 

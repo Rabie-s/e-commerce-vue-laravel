@@ -14,9 +14,9 @@ class CartController extends Controller
     public function index()
     {
         //session()->forget('cart');
-        
+
         $cartTotal = Cart::total();
-        return Inertia::render('User/Cart/Cart', [ 'cartTotal' => $cartTotal]);
+        return Inertia::render('User/Cart/Cart', ['cartTotal' => $cartTotal]);
     }
 
 
@@ -30,8 +30,14 @@ class CartController extends Controller
         ]);
 
         $product = Product::findOrFail($request->productId);
-        Cart::add($product->id, $product->name, $request->quantity, $request->price, 0, ['main_image' => $product->main_image]);
-        
+        Cart::add(
+            $product->id,
+            $product->name,
+            $request->quantity,
+            $request->price,
+            0,
+            ['main_image' => $product->main_image_url]
+        );
     }
 
     public function updateItem(Request $request)
@@ -49,7 +55,8 @@ class CartController extends Controller
         Cart::remove($request->rowId);
     }
 
-    public function destroyCart(){
+    public function destroyCart()
+    {
         Cart::destroy();
     }
 }

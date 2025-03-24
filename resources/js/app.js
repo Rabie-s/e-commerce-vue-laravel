@@ -13,10 +13,10 @@ createInertiaApp({
     const pages = import.meta.glob('./Pages/**/*.vue', { eager: true })
     let page = pages[`./Pages/${name}.vue`]
 
-    // تقسيم الاسم إلى أجزاء بناءً على '/'
+    
     const parts = name.split('/')
 
-    // تحديد التخطيط بناءً على أجزاء المسار
+   
     if (parts[0] === 'Admin' && parts[1] === 'Auth') {
       page.default.layout = null
     } else if (parts[0] === 'User' && parts[1] === 'Profile') {

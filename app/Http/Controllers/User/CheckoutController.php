@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\User;
 
 use Inertia\Inertia;
-use Illuminate\Http\Request;
 use App\Enums\OrderStatusEnum;
 use App\Enums\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Http\Requests\StoreCheckoutRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -17,7 +15,7 @@ class CheckoutController extends Controller
 {
     public function index()
     {
-        $authenticatedUser = Auth::guard('user')->user();
+        $authenticatedUser = auth('user')->user();
         $cartTotal = Cart::total();
         try {
             $userShippingAddress = $authenticatedUser->shippingAddress()->firstOrFail();
@@ -26,13 +24,12 @@ class CheckoutController extends Controller
             return Inertia::render('User/Checkout/Checkout', ['userShippingAddress' => null]);
         }
 
-
         return Inertia::render('User/Checkout/Checkout', ['userShippingAddress' => $userShippingAddress, 'cartTotal' => $cartTotal]);
     }
 
     public function placeOrder(StoreCheckoutRequest $request)
     {
-        $authenticatedUser = Auth::guard('user')->user();
+        $authenticatedUser = auth('user')->user();
 
         //order
         $order = $authenticatedUser->orders()->create([
